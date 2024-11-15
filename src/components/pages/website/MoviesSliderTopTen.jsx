@@ -10,7 +10,7 @@ const MoviesSliderTopTen = ({title="",isTopTen=true, category}) => {
         const { className, style, onClick } = props;
         return (
           <button
-          className='absolute -top-12 right-3'
+          className='absolute top-0 right-3'
             onClick={onClick}
           ><ChevronRight stroke={"#fff"} size={30}/>
           </button>

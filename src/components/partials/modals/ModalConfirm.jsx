@@ -3,8 +3,11 @@ import React from 'react'
 import ModalWrapper from './ModalWrapper'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { queryData } from '@/components/helpers/queryData';
+import { StoreContext } from '@/components/store/storeContext';
+import { setError, setIsConfirm, setMessage, setSuccess } from '@/components/store/storeAction';
 
-const ModalConfirm = ({setIsConfirm, mysqlApiArchive, queryKey, active, setIsSuccess}) => {
+const ModalConfirm = ({ mysqlApiArchive, queryKey, active, setIsSuccess}) => {
+  const {dispatch} = React.useContext(StoreContext)
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -13,14 +16,12 @@ const ModalConfirm = ({setIsConfirm, mysqlApiArchive, queryKey, active, setIsSuc
       queryClient.invalidateQueries({ queryKey: [queryKey] });
 
       if (data.success) {
-        // dispatch(setValidate(true));
-        // dispatch(setMessage(data.error));
-        setIsConfirm(false)
-        setIsSuccess (true)
+       
+        dispatch(setIsConfirm(false))
+        dispatch(setSuccess (true))
       } else {
-        // dispatch(setIsConfirm(false));
-        // dispatch(setSuccess(true));
-        // dispatch(setMessage("Record updated"));
+        dispatch(setError(true))
+        dispatch(setMessage(data.error))
       }
     },
   });
@@ -31,7 +32,7 @@ const ModalConfirm = ({setIsConfirm, mysqlApiArchive, queryKey, active, setIsSuc
     });
   };
 
-  const handleClose = () => 
+  const handleClose = () => dispatch(setIsConfirm(false))
     setIsConfirm (false)
 
   return (

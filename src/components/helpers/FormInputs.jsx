@@ -1,4 +1,5 @@
 import { useField } from "formik";
+
 export const InputTextArea = ({ label, ...props }) => {
     const [field, meta] = useField(props);
   
@@ -77,3 +78,36 @@ export const InputTextArea = ({ label, ...props }) => {
     );
   };
   
+  export const InputSelect = ({
+    label,
+    className = "",
+    onChange = null,
+    ...props
+  }) => {
+    const [field, meta] = useField(props);
+  
+    return (
+      <>
+        <label
+          htmlFor={props.id || props.name}
+          className={meta.touched && meta.error ? "custom error-show " : "custom"}
+        >
+          {label}
+        </label>
+  
+        <select
+          {...field}
+          {...props}
+          className={meta.touched && meta.error ? "error-show " : className}
+          onChange={(e) => {
+            onChange !== null && onChange(e);
+            field.onChange(e);
+          }}
+        />
+  
+        {meta.touched && meta.error ? (
+          <span className="error-show">{meta.error}</span>
+        ) : null}
+      </>
+    );
+  };

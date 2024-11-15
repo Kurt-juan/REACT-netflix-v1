@@ -145,11 +145,6 @@ const TopMoviesModalAdd = ({setIsAdd, setIsSuccess, itemEdit, setIsValidate, set
                       />
                     </div>
          
-
-
-            
-            
-
             <div className='input-wrap'>
             <InputText
              label="Title"

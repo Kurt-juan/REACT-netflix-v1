@@ -3,9 +3,11 @@ import React from 'react'
 import ModalWrapper from './ModalWrapper'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { queryData } from '@/components/helpers/queryData';
+import { StoreContext } from '@/components/store/storeContext';
+import { setError, setIsDelete, setMessage, setSuccess } from '@/components/store/storeAction';
 
-const ModalDelete = ({setIsDelete,queryKey,mysqlApiDelete}) => {
-
+const ModalDelete = ({queryKey,mysqlApiDelete}) => {
+  const {dispatch} = React.useContext(StoreContext)
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -14,16 +16,14 @@ const ModalDelete = ({setIsDelete,queryKey,mysqlApiDelete}) => {
       queryClient.invalidateQueries({ queryKey: [queryKey] });
    
       if (data.success) {
-        // dispatch(setValidate(true));
-        // dispatch(setMessage(data.error));
-        handleClose();
-        setIsSuccess (true)
+       
+        dispatch(setIsDelete (false))
+        dispatch(setSuccess (true))
 
       } else {
           
-        // dispatch(setIsDelete(false));
-        // dispatch(setSuccess(true));
-        // dispatch(setMessage("Record Successfully Deleted"));
+        dispatch(setError(true))
+        dispatch(setMessage(data.error))
       }
     },
   });
@@ -33,9 +33,8 @@ const ModalDelete = ({setIsDelete,queryKey,mysqlApiDelete}) => {
    
   };
 
-  const handleClose = () => 
-    setIsDelete(false)
-
+  const handleClose = () => dispatch(setIsDelete(false))
+   
   return (
  
 <ModalWrapper>

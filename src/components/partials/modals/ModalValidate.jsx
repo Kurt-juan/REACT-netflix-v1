@@ -1,9 +1,13 @@
 import { CircleAlert, MessageCircleWarning, } from 'lucide-react'
 import React from 'react'
 import ModalWrapper from './ModalWrapper'
+import { StoreContext } from '@/components/store/storeContext'
+import { setValidate } from '@/components/store/storeAction'
 
-const ModalValidate = ({setIsValidate, message}) => {
-  const handleClose = () => setIsValidate(false)
+const ModalValidate = ({}) => {
+
+  const {dispatch} = React.useContext(StoreContext)
+  const handleClose = () => dispatch(setValidate(false))
   return (
  
 <ModalWrapper>
@@ -14,7 +18,7 @@ const ModalValidate = ({setIsValidate, message}) => {
                    <MessageCircleWarning className='stroke-info' strokeWidth={1} size={45}/>
                </div>
                <h3 className='mt-5 mb-3'>Validation Issue</h3>
-               <p className='mt-3 mb-5 text-balance'>{message}</p>
+               <p className='mt-3 mb-5 text-balance'>{store.message}</p>
            </div>
 
            <div className='modal-footer flex py-2 px-4 border-t border-line justify-end gap-3'>

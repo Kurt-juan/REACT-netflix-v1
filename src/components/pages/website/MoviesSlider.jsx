@@ -51,6 +51,7 @@ const MoviesSlider = ({title="",isTopTen=true, category}) => {
    <div key={key}className="slider-item relative group overflow-hidden px-5">
    <img src={`${devImgPath}/${item.movies_image}`} alt="" className='w-[331px]
    h-[441px] object-cover' />
+   
    <div className="info absolute p-4 text-white top-full left-5  bg-black bg-opacity-95 flex flex-col justify-center group-hover:top-0 transition-all w-[331px]
    h-[441px] z-40 ">
    
@@ -64,6 +65,7 @@ const MoviesSlider = ({title="",isTopTen=true, category}) => {
 
    
    </div>
+
    {isTopTen &&
    <p className='absolute -bottom-3 -left-2 text-[200px] mb-0 leading-none font-black text-accent counter group-hover:opacity-0'>1</p>
    }

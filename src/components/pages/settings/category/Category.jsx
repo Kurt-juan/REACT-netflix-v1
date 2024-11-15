@@ -2,23 +2,26 @@ import { Archive, ArchiveRestore, Pencil, Plus, Trash } from 'lucide-react'
 import React from 'react'
 import CategoryAddForm from './CategoryAddForm'
 import CategoryTable from './CategoryTable'
+import { StoreContext } from '@/components/store/storeContext'
+import { setIsAdd } from '@/components/store/storeAction'
 
 const Category = () => {
-    const [isAdd, setIsAdd] =  React.useState(false);
-const [itemEdit, setItemEdit] = React.useState(null);
+    const {dispatch, store} = React.useContext(StoreContext)
+    const [ItemEdit, setItemEdit] =  React.useState(null);
+  
 
-const handleAdd = () => {
-  setIsAdd(true)
-  setItemEdit(null)
-}
-
+      const handleAdd = () => {
+        dispatch(setIsAdd(true))
+        setItemEdit(null)
+      }
+      
   return (
-   <section className='p-4'>
-        <button className='btn btn-accent' onClick={(handleAdd)=> setIsAdd(true)}><Plus/>Add New</button>
-        {isAdd &&  <CategoryAddForm setIsAdd = {setIsAdd}/> }     
-        {<CategoryTable isAdd={isAdd}/>}
+    <section className='p-4'>
+    <button className='btn btn-accent' onClick={handleAdd}><Plus/>Add New</button>
+    {store.isAdd &&  <CategoryAddForm setItemEdit={ItemEdit}/> }     
+    {<CategoryTable setItemEdit={setItemEdit}/>}
 
-   </section>
+</section>
   )
 }
 

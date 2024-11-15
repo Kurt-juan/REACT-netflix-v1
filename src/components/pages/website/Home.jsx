@@ -48,9 +48,9 @@ const Home = () => {
   );
   
 
-  const getAllKdrama = !isLoading && movies?.data.filter((movie) => movie.movies_category === 'kdrama' ) 
-  const getAllPinoy = !isLoading && movies?.data.filter((movie) => movie.movies_category === 'pinoy' ) 
-  const getAllInternational = !isLoading && movies?.data.filter((movie) => movie.movies_category === 'international' ) 
+  const getAllKdrama = !isLoading && movies?.data.filter((movie) => movie.movies_category === 'K-Drama' ) 
+  const getAllPinoy = !isLoading && movies?.data.filter((movie) => movie.movies_category === 'PH' ) 
+  const getAllInternational = !isLoading && movies?.data.filter((movie) => movie.movies_category === 'International' ) 
   
 
 

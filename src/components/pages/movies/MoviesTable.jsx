@@ -12,11 +12,15 @@ import ModalConfirm from '@/components/partials/modals/ModalConfirm'
 import ToastSuccess from '@/components/partials/ToastSuccess'
 import MoviesModalAdd from './MoviesModalAdd'
 import ModalValidate from '@/components/partials/modals/ModalValidate'
+import { StoreContext } from '@/components/store/storeContext'
+import { setIsConfirm, setIsDelete } from '@/components/store/storeAction'
 
 const MoviesTable = () => {
-    const [isConfirm, setIsConfirm] =  React.useState(false) //Show/Hide nang modalConfirm
-    const [isDelete, setIsDelete] =  React.useState(false) //Show/Hide nang modalDelete
-    const [isSuccess, setIsSuccess] =  React.useState(false) //Show/Hide nang toastSucess
+
+  const {store, dispatch} = React.useContext(StoreContext)
+
+    
+   
     const [isAdd, setIsAdd] =  React.useState(false) 
     const [id, setId] =  React.useState(null)
     const [isActive, setIsActive] =  React.useState(0)
@@ -41,19 +45,19 @@ const MoviesTable = () => {
       );
 
       const handleArchive = (item) => {
-        setIsConfirm(true)
+        dispatch(setIsConfirm(true))
         setIsActive(0);
         setId(item.movies_aid)
       }
     
       const handleRestore = (item) => {
-        setIsConfirm(true)
+        dispatch(setIsConfirm(true))
         setIsActive(1);
         setId(item.movies_aid)
       }
     
       const handleDelete = (item) => {
-        setIsDelete(true)
+        dispatch(setIsDelete(true))
         setId(item.movies_aid)}
 
       const handleAdd = (item) => {
@@ -157,18 +161,18 @@ const MoviesTable = () => {
     </div>
 </div>
 
-{isConfirm && 
+{store.isConfirm && 
 <ModalConfirm setIsConfirm = {setIsConfirm}
     queryKey ="movies"
     mysqlApiArchive ={`/v1/movies/active/${id}`}
     active={isActive}
-    setIsSuccess={setIsSuccess}
+   
 />}
 
-{isDelete && <ModalDelete setIsDelete={setIsDelete}
+{store.isDelete && <ModalDelete setIsDelete={setIsDelete}
     mysqlApiDelete ={`/v1/movies/${id}`}   
     queryKey ="movies"
-    setIsSuccess={setIsSuccess}
+    
 
 />}
 
@@ -177,11 +181,11 @@ const MoviesTable = () => {
 
 {IsView && <MoviesModalView itemEdit = {itemEdit} setIsView = {setIsView} />}
 
-{isAdd && <MoviesModalAdd setIsAdd={setIsAdd} setIsSuccess={setIsSuccess} itemEdit={itemEdit} setIsValidate={setIsValidate} setMessage={setMessage} />}
+{store.isAdd && <MoviesModalAdd itemEdit={itemEdit}  />}
 
-{isSuccess && <ToastSuccess setIsSuccess={setIsSuccess}/>}
+{store.success && <ToastSuccess />}
 
-{IsValidate && <ModalValidate setIsValidate={setIsValidate} message = {message}/>}
+{store.validate && <ModalValidate />}
 </>
   )
 }
